@@ -24,11 +24,6 @@ class Country
 			dest_plugs << get_plugs(s)
 		end
 		
-		# if dest_plugs.any? { |dp| !(sockets - dp).empty? }
-		# 	adapter_needed = true
-		# else
-		# 	adapter_needed = false
-		# end
 
 		problem_plugs = []
 		dest_plugs.each do |dp|
@@ -36,9 +31,11 @@ class Country
 		end
 
 		if problem_plugs.flatten.size == 0
-			puts "No adapter needed when travelling from #{name} to #{dest_country.name}."
+			puts "\nNo adapter needed when travelling from #{name} to #{dest_country.name}."
+		elsif problem_plugs.select { |pp| pp.sort != sockets }.size == 0 
+			puts "\nAdapter is definetely needed when travelling from #{name} to #{dest_country.name} because the plugs in #{name} don't fit any of the sockets in #{dest_country.name}."
 		else
-			puts "Adapter is needed when travelling from #{name} to #{dest_country.name} because:"
+			puts "\nAdapter is needed when travelling from #{name} to #{dest_country.name} because:"
 			problem_plugs.each_with_index do |plug, ind|
 				if plug.size == 1
 					puts "  - The plug type #{plug.join(', ')} does not fit into socket type #{dest_country.sockets[ind]}"
