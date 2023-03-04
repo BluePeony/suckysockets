@@ -1,4 +1,6 @@
 module CountriesSocketsPlugs
+
+  # this hash with country name as the key and an array of sockets that are used in this country
   COUNTRIES_SOCKETS = {
     "Abu Dhabi" => %i(G),
     "Afghanistan" => %i(C F),
@@ -247,6 +249,7 @@ module CountriesSocketsPlugs
     "Ukraine" => %i(C F),
     "United Arab Emirates" => %i(G),
     "United Kingdom" => %i(G),
+    "United States" => %i(A B),
     "United States of America" => %i(A B),
     "USA" => %i(A B),
     "United States Virgin Islands" => %i(A B),
@@ -265,6 +268,7 @@ module CountriesSocketsPlugs
     "Zimbabwe" => %i(D G)
   }
 
+  # A hash with a socket type as the key and and array with plugs that fit that particular socket
   SOCKETS_PLUGS = {
     :A => %i(A),
     :B => %i(A B),
@@ -282,14 +286,17 @@ module CountriesSocketsPlugs
     :O => %i(C O)
   }
 
+  # Gets the array of sockets for the country given as the parameter
   def get_sockets(country)
     COUNTRIES_SOCKETS[country]
   end
 
+  # Gets the array of plugs that fit the socket given as the parameter
   def get_plugs(socket)
     SOCKETS_PLUGS[socket]
   end
 
+  # Checks if the country given as the parameter is included in the hash COUNTRIES_SOCKETS and is therewith a valid country name
   def validate_country_name(country)
     COUNTRIES_SOCKETS.include?(country)
   end

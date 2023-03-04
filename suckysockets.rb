@@ -1,6 +1,6 @@
 require_relative 'country'
 
-module SuckySocket # a module is a bucket for related methods
+module SuckySocket 
 
 	def self.run
 		puts "In which country do you live?"
@@ -8,13 +8,7 @@ module SuckySocket # a module is a bucket for related methods
 		puts "What is your destination country?"
 		destination_country = Country.new(gets.chomp)
 
-		# if start_country.needs_adapter_for?(destination_country) 
-		# 	puts "Adapter needed!"
-		# else
-		# 	puts "No adapter needed!" 
-		# end
-
-		start_country.needs_adapter_for(destination_country)
+		start_country.needs_adapter_for?(destination_country)
 	end
 end
 

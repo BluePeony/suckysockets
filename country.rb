@@ -1,4 +1,3 @@
-
 require_relative 'countries_sockets_plugs'
 
 class Country
@@ -7,7 +6,8 @@ class Country
 
 	attr_reader :name, :sockets
 
-	def initialize(name = "United States")
+	# Use USA as default start_country when no country was entered by the user
+	def initialize(name = "USA")
 		if validate_country_name(name)
 			@name = name
 			@sockets = get_sockets("#{@name}")
@@ -17,7 +17,8 @@ class Country
 		end		
 	end
 
-	def needs_adapter_for(dest_country)
+	# Checks whether an adapter is needed by comparing whether the plugs of the start country match the plugs that work with every particular socket of the destination country
+	def needs_adapter_for?(dest_country)
 
 		dest_plugs = []
 		dest_country.sockets.each do |s|
@@ -32,8 +33,10 @@ class Country
 
 		if problem_plugs.flatten.size == 0
 			puts "\nNo adapter needed when travelling from #{name} to #{dest_country.name}."
+			return false
 		elsif problem_plugs.select { |pp| pp.sort != sockets }.size == 0 
 			puts "\nAdapter is definetely needed when travelling from #{name} to #{dest_country.name} because the plugs in #{name} don't fit any of the sockets in #{dest_country.name}."
+			return true
 		else
 			puts "\nAdapter is needed when travelling from #{name} to #{dest_country.name} because:"
 			problem_plugs.each_with_index do |plug, ind|
@@ -43,16 +46,9 @@ class Country
 					puts "  - The plug types #{plug.join(', ')} don't fit into socket type #{dest_country.sockets[ind]}"
 				end
 			end
+			return true
 		end
 
 	end
 
-end
-
-if __FILE__ == $0
-	c_start = Country.new("Denmark")
-	#p c_start.sockets
-	c_dest = Country.new("Germany")
-	#p c_dest.sockets
-	puts c_start.needs_adapter_for?(c_dest)
 end
