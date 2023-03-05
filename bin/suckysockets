@@ -1,0 +1,10 @@
+#! /usr/bin/env ruby
+
+require_relative '../lib/sucky_socket/country'
+
+puts "In which country do you live?"
+start_country = SuckySocket::Country.new(gets.chomp)
+puts "What is your destination country?"
+destination_country = SuckySocket::Country.new(gets.chomp)
+
+start_country.needs_adapter_for?(destination_country)
